@@ -1,0 +1,107 @@
+/* Adapted from the React Bits JellyRadio CSS; springs approximated with linear() easing. */
+.jelly-radio {
+  --jr-chip: #27272a;
+  --jr-active: #f4f4f5;
+  --jr-text: #e4e4e7;
+  --jr-active-text: #18181b;
+  --jr-gap: 6px;
+  --jr-radius: 999px;
+  --jr-h: 36px;
+  --jr-font: 13px;
+  --jr-px: 14px;
+  --jr-spring: linear(0, 0.053, 0.182, 0.347, 0.52, 0.682, 0.819, 0.928, 1.006, 1.057, 1.085, 1.094, 1.092, 1.081, 1.065, 1.049, 1.033, 1.02, 1.009, 1.001, 0.995, 0.992, 0.991, 0.991, 0.992, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--jr-gap);
+  padding: 4px var(--jr-pad-x, 8px);
+  user-select: none;
+  -webkit-user-select: none;
+}
+.jelly-radio--sm {
+  --jr-h: 32px;
+  --jr-font: 12.5px;
+  --jr-px: 12px;
+}
+.jelly-radio__chip {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transform-origin: 50% 50%;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 560ms var(--jr-spring);
+}
+.jelly-radio__chip[data-on="true"] {
+  cursor: default;
+  z-index: 1;
+}
+.jelly-radio__chip:disabled {
+  cursor: default;
+  opacity: 0.4;
+}
+.jelly-radio__chip:focus-visible {
+  outline: none;
+}
+.jelly-radio__chip:focus-visible .jelly-radio__skin {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.jelly-radio__skin {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  height: var(--jr-h);
+  padding: 0 var(--jr-px);
+  border-radius: var(--jr-radius);
+  overflow: hidden;
+  background: var(--jr-chip);
+  color: var(--jr-text);
+  font-size: var(--jr-font);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  transition: transform 160ms var(--ease-out), background-color 200ms ease, color 200ms ease;
+}
+.jelly-radio__skin::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--jr-text);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .jelly-radio__chip[data-on="false"]:not(:disabled):hover .jelly-radio__skin::before {
+    opacity: 0.11;
+  }
+}
+.jelly-radio__chip:active .jelly-radio__skin {
+  transform: scale(0.97);
+}
+.jelly-radio__chip[data-on="true"] .jelly-radio__skin {
+  background: var(--jr-active);
+  color: var(--jr-active-text);
+}
+.jelly-radio__icon {
+  display: inline-flex;
+}
+.jelly-radio__icon svg {
+  width: 15px;
+  height: 15px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .jelly-radio__chip {
+    transition: none;
+  }
+  .jelly-radio__chip:active .jelly-radio__skin {
+    transform: none;
+  }
+}

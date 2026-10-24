@@ -1,0 +1,206 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens (docs/DESIGN_SYSTEM.md). Dark neutral surfaces from the reference; the Orb
+ * palette (violet/cyan/deep blue) is decoration only. Text colours are checked for ≥ 4.5:1
+ * contrast on every surface they are used on.
+ */
+:root {
+  --bg: #09090b;
+  --bg-raised: #0f0f12;
+  --surface: #131317;
+  --surface-2: #1a1a1f;
+  --surface-3: #232329;
+  --border: rgb(255 255 255 / 0.1);
+  --border-strong: rgb(255 255 255 / 0.18);
+  --text: #f4f4f5;
+  --text-muted: #b6b6c0;
+  --text-subtle: #92929e;
+  --ink-on-light: #18161d;
+
+  --orb-violet: #9c43fe;
+  --orb-cyan: #4cc2e9;
+  --orb-deep: #101499;
+
+  --focus: #7dd3fc;
+  --link: #a5d8ff;
+
+  --positive: #6ee7a0;
+  --positive-bg: rgb(110 231 160 / 0.1);
+  --info: #8fd3fb;
+  --info-bg: rgb(143 211 251 / 0.1);
+  --caution: #fcd56b;
+  --caution-bg: rgb(252 213 107 / 0.1);
+  --warning: #fdba74;
+  --warning-bg: rgb(253 186 116 / 0.11);
+  --negative: #fda4af;
+  --negative-bg: rgb(253 164 175 / 0.1);
+  --accent: #c9b8ff;
+  --accent-bg: rgb(201 184 255 / 0.11);
+  --neutral: #c4c4cc;
+  --neutral-bg: rgb(255 255 255 / 0.06);
+
+  --radius-card: 18px;
+  --radius-control: 12px;
+  --shadow-card: 0 -20px 80px -20px rgb(255 255 255 / 0.07) inset, 0 1px 0 rgb(255 255 255 / 0.04) inset;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-raised: var(--bg-raised);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-fg: var(--text);
+  --color-muted: var(--text-muted);
+  --color-subtle: var(--text-subtle);
+  --color-focus: var(--focus);
+  --color-link: var(--link);
+  --color-positive: var(--positive);
+  --color-info: var(--info);
+  --color-caution: var(--caution);
+  --color-warning: var(--warning);
+  --color-negative: var(--negative);
+  --color-accent: var(--accent);
+  --color-orb-violet: var(--orb-violet);
+  --color-orb-cyan: var(--orb-cyan);
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-display: var(--font-bricolage), var(--font-geist), ui-sans-serif, sans-serif;
+  --radius-card: var(--radius-card);
+  --radius-control: var(--radius-control);
+}
+
+html {
+  background: var(--bg);
+  color: var(--text);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Visible focus for every interactive element. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+::selection {
+  background: rgb(76 194 233 / 0.35);
+}
+
+.sr-only-focusable:not(:focus):not(:focus-within) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Bento card surface (adapted from the Magic UI reference: inset glow + hairline border). */
+.bento-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  transition: border-color 200ms ease, background-color 200ms ease;
+}
+.bento-card:hover {
+  border-color: var(--border-strong);
+}
+.bento-card:focus-within {
+  border-color: var(--border-strong);
+}
+
+.tone-positive { color: var(--positive); background: var(--positive-bg); }
+.tone-info { color: var(--info); background: var(--info-bg); }
+.tone-caution { color: var(--caution); background: var(--caution-bg); }
+.tone-warning { color: var(--warning); background: var(--warning-bg); }
+.tone-negative { color: var(--negative); background: var(--negative-bg); }
+.tone-accent { color: var(--accent); background: var(--accent-bg); }
+.tone-neutral { color: var(--neutral); background: var(--neutral-bg); }
+
+.ink-positive { color: var(--positive); }
+.ink-info { color: var(--info); }
+.ink-caution { color: var(--caution); }
+.ink-warning { color: var(--warning); }
+.ink-negative { color: var(--negative); }
+.ink-accent { color: var(--accent); }
+.ink-neutral { color: var(--neutral); }
+
+.text-link {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-color: rgb(165 216 255 / 0.4);
+  text-underline-offset: 3px;
+}
+.text-link:hover {
+  text-decoration-color: currentColor;
+}
+
+/* Native <dialog> used for the country picker and the mobile filter drawer. */
+dialog.sheet {
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
+dialog.sheet::backdrop {
+  background: rgb(0 0 0 / 0.6);
+  backdrop-filter: blur(2px);
+}
+dialog.sheet[open] .sheet-panel {
+  animation: sheet-in 260ms var(--ease-out);
+}
+@keyframes sheet-in {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--surface-2), var(--surface-3), var(--surface-2));
+  background-size: 200% 100%;
+  animation: skeleton 1.4s ease-in-out infinite;
+  border-radius: 8px;
+}
+@keyframes skeleton {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+/* Static Orb fallback (reduced motion, no WebGL, before hydration). */
+.orb-fallback {
+  background:
+    radial-gradient(closest-side, transparent 64%, rgb(156 67 254 / 0.32) 72%, rgb(76 194 233 / 0.22) 78%, transparent 86%),
+    radial-gradient(closest-side, rgb(16 20 153 / 0.35), transparent 75%);
+  border-radius: 9999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
